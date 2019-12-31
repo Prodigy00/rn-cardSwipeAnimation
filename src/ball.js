@@ -1,8 +1,19 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Animated } from "react-native";
 
 const Ball = () => {
-  return <View style={styles.ball} />;
+  //starting position
+  const position = new Animated.ValueXY(0, 0);
+  //target position
+  Animated.spring(position, {
+    toValue: { x: 200, y: 400 }
+  }).start();
+
+  return (
+    <Animated.View style={position.getLayout()}>
+      <View style={styles.ball} />
+    </Animated.View>
+  );
 };
 
 const styles = StyleSheet.create({
