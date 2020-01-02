@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Animated } from "react-native";
+import { View, Animated, PanResponder } from "react-native";
 
 const Deck = ({ data, renderCard }) => {
   const renderCards = () => data.map(item => renderCard(item));
