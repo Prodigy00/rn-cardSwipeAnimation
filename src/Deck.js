@@ -18,16 +18,23 @@ class Deck extends React.Component {
     });
     this.state = { panResponder, position };
   }
-  renderCards = () => this.props.data.map(item => this.props.renderCard(item));
+  renderCards() {
+    return this.props.data.map((item, index) => {
+      if (index === 0) {
+        return (
+          <Animated.View
+            style={this.state.position.getLayout()}
+            {...this.state.panResponder.panHandlers}
+          >
+            {this.props.renderCard(item)}
+          </Animated.View>
+        );
+      }
+      return this.props.renderCard(item);
+    });
+  }
   render() {
-    return (
-      <Animated.View
-        style={this.state.position.getLayout()}
-        {...this.state.panResponder.panHandlers}
-      >
-        {this.renderCards()}
-      </Animated.View>
-    );
+    return <View>{this.renderCards()}</View>;
   }
 }
 
