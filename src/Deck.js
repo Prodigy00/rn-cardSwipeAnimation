@@ -15,10 +15,20 @@ class Deck extends React.Component {
         //change position val using animated
         position.setValue({ x: gesture.dx, y: gesture.dy });
       },
-      onPanResponderRelease: () => {}
+      onPanResponderRelease: () => {
+        this.resetPosition();
+      }
     });
     this.state = { panResponder, position };
   }
+
+  //helper method to reset card position if card gets released
+  resetPosition() {
+    Animated.spring(this.state.position, {
+      toValue: { x: 0, y: 0 }
+    }).start();
+  }
+
   //helper method to determine how card should be positioned in x-y direction
   getCardStyle() {
     const { position } = this.state;
