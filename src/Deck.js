@@ -18,13 +18,20 @@ class Deck extends React.Component {
     });
     this.state = { panResponder, position };
   }
+  //helper method to determine how card should be positioned in x-y direction
+  getCardStyle() {
+    return {
+      ...this.state.position.getLayout(),
+      transform: [{ rotate: "-45deg" }]
+    };
+  }
   renderCards() {
     return this.props.data.map((item, index) => {
       if (index === 0) {
         return (
           <Animated.View
             key={item.id}
-            style={this.state.position.getLayout()}
+            style={this.getCardStyle()}
             {...this.state.panResponder.panHandlers}
           >
             {this.props.renderCard(item)}
