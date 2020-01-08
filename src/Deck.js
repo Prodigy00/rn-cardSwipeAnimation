@@ -27,7 +27,7 @@ class Deck extends React.Component {
         }
       }
     });
-    this.state = { panResponder, position };
+    this.state = { panResponder, position, index: 0 };
   }
 
   forceSwipe(direction) {
@@ -35,7 +35,14 @@ class Deck extends React.Component {
     Animated.timing(this.state.position, {
       toValue: { x, y: 0 },
       duration: SWIPE_OUT_DURATION
-    }).start();
+    }).start(() => this.onSwipeComplete(direction));
+  }
+
+  onSwipeComplete(direction) {
+    const { onSwipeRight, onSwipeLeft, data } = this.props;
+    const item = data[this.state.index];
+
+    direction === "right" ? onSwipeRight(item) : onSwipeLeft(item);
   }
   //helper method to reset card position if card gets released
   resetPosition() {
@@ -76,5 +83,9 @@ class Deck extends React.Component {
     return <View>{this.renderCards()}</View>;
   }
 }
+Deck.defaultProps = {
+  onSwipeRight: () => {},
+  onSwipeLeft: () => {}
+};
 
 export default Deck;
