@@ -43,6 +43,11 @@ class Deck extends React.Component {
     const item = data[this.state.index];
 
     direction === "right" ? onSwipeRight(item) : onSwipeLeft(item);
+    //reset val of position on new card after swiping is done
+    this.state.position.setValue({ x: 0, y: 0 });
+    this.setState({
+      index: this.state.index + 1
+    });
   }
   //helper method to reset card position if card gets released
   resetPosition() {
@@ -64,8 +69,11 @@ class Deck extends React.Component {
     };
   }
   renderCards() {
-    return this.props.data.map((item, index) => {
-      if (index === 0) {
+    return this.props.data.map((item, i) => {
+      if (i < this.state.index) {
+        return null;
+      }
+      if (i === this.state.index) {
         return (
           <Animated.View
             key={item.id}
