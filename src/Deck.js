@@ -103,7 +103,7 @@ class Deck extends React.Component {
       .reverse();
   }
   render() {
-    return <View>{this.renderCards()}</View>;
+    return <Animated.View>{this.renderCards()}</Animated.View>;
   }
 }
 Deck.defaultProps = {
