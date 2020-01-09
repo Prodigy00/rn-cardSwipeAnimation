@@ -4,7 +4,9 @@ import {
   Animated,
   PanResponder,
   Dimensions,
-  StyleSheet
+  StyleSheet,
+  LayoutAnimation,
+  UIManager
 } from "react-native";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -34,6 +36,13 @@ class Deck extends React.Component {
       }
     });
     this.state = { panResponder, position, index: 0 };
+  }
+
+  componentDidUpdate() {
+    //for android
+    UIManager.setLayoutAnimationEnabledExperimental &&
+      UIManager.setLayoutAnimationEnabledExperimental(true);
+    LayoutAnimation.spring();
   }
 
   forceSwipe(direction) {
